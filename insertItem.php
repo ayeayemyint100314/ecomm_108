@@ -1,5 +1,10 @@
 <?php
 require_once "dbconn.php";
+// session create
+if(!isset($_SESSION))
+{
+    session_start();
+}
 $sql = "select * from category";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -17,24 +22,25 @@ if (isset($_POST['insertItem']))
      $quantity =  $_POST['quantity'];
      $description =  $_POST['description'];
      $category =  $_POST['category'];
-     $fileName = $_FILES['img']['name'];
-     $filePath = "images/".$fileName;
-
-     echo "$category  categorty";
+     $fileName = $_FILES['img']['name']; // accessing filename
+     $filePath = "images/".$fileName;// prepare server location    
 
      // store image in server ( local machine hardisk)
-     $status = move_uploaded_file($_FILES['img']['tmp_name'], $filePath);
-     if ($status)
+     $status = move_uploaded_file($_FILES['img']['tmp_name'],  $filePath);
+     if ($status)// if storing file in a specified directory in a server
      {
-          $sql = "insert into item values (?, ?, ?, ?, ?, ?, ?)";
+          $sql = "insert into item  values (?, ?, ?, ?, ?, ?, ?)";
           $stmt =   $conn->prepare($sql);
           $status = $stmt->execute([null, $itemName, $price, $description, $quantity, $filePath, $category]);
           if ($status)
-          {
-            echo "inserted item successfully!";
+          {  // page will transit to view page
+
+                $_SESSION['insertSuccess'] = "Item has been inserted successfully";
+                header("Location:viewItem.php");
+            
           }
 
-     }// if end
+     }// if end 
     
 }// insert submit end
 
@@ -45,11 +51,11 @@ if (isset($_POST['insertItem']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Insert Items</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
 
-<body>
+<body class="bg-light">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-3">column 3</div>
