@@ -32,10 +32,11 @@ if (isset($_POST['insertItem']))
           $sql = "insert into item  values (?, ?, ?, ?, ?, ?, ?)";
           $stmt =   $conn->prepare($sql);
           $status = $stmt->execute([null, $itemName, $price, $description, $quantity, $filePath, $category]);
+          $lastId = $conn->lastInsertId();
           if ($status)
           {  // page will transit to view page
 
-                $_SESSION['insertSuccess'] = "Item has been inserted successfully";
+                $_SESSION['insertSuccess'] = "Item with id $lastId has  been inserted successfully !!";
                 header("Location:viewItem.php");
             
           }
@@ -58,8 +59,11 @@ if (isset($_POST['insertItem']))
 <body class="bg-light">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3">column 3</div>
-            <div class="col-md-9">
+            <?php require_once "navbar.php"; ?>
+        </div>
+        <div class="row">
+          
+            <div class="col-md-6 mx-auto">
 
                 <form class="form mt-2 pt-2" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                     <fieldset>
