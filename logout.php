@@ -1,8 +1,11 @@
 <?php
-if(isset($_SESSION['adminId']))
-unset($_SESSION['adminId']);
-if(isset($_SESSION['login']))
-unset($_SESSION['login']);
+if(!$_SESSION)
+{
+    session_start();
+}
+
+session_destroy();
+
 header("Location:login.php");
 
 

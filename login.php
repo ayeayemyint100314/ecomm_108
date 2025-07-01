@@ -15,7 +15,7 @@ if (isset($_POST['adminLogin'])) {
         $stmt->execute([$username]);
         $userInfo = $stmt->fetch();
         if (!$userInfo) {
-            $message = "Username does not exist. ";
+            $message = "Username or password might be incorrect. ";
         } else {
             if (password_verify($password, $userInfo['password'])) {
                 $_SESSION['adminId'] = $username;
@@ -23,7 +23,7 @@ if (isset($_POST['adminLogin'])) {
                 header("Location:viewItem.php");
             } else {
 
-                $message = "Password might be incorrect. ";
+                $message = "Username or password might be incorrect. ";
             }
         }
     } catch (PDOException $e) {
