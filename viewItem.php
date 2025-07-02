@@ -88,9 +88,27 @@ if(isset($_GET['priceRadio']))
 
 
 }
+if(isset($_GET['bSearch']))
+{   $keyword =  $_GET['wSearch'];
+    try{
+        $sql = "select * from item where iname like ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(["%".$keyword."%"]);
+        $items = $stmt->fetchAll();
+
+
+    }catch(PDOException $e)
+    {
+        echo $e->getMessage();
+    }
+
+}
+
+
 
 
 ?>
+<?php if(isset($_SESSION['adminId']) && isset($_SESSION['login'])) { ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -162,7 +180,7 @@ if(isset($_GET['priceRadio']))
             </div>
 
             <div class="col-md-10 mx-auto py-5 mb-2">
-                 <div class="py-2"> <a class="btn btn-primary" href="insertItem.php">Add New Item</a></div>  
+                 <div class="py-2"> <a class="btn btn-outline-primary" href="insertItem.php">Add New Item</a></div>  
 
                 <?php
                 if (isset($_SESSION['insertSuccess'])) {
@@ -202,8 +220,8 @@ if(isset($_GET['priceRadio']))
                                 <td>$item[category]</td>
                                 <td>$item[quantity]</td>
                                 <td><img src=$item[img_path] style=width:80px; height:80px></td>
-                                <td><a class='btn btn-primary rounded-pill'   href=editItem.php?eid=$item[item_id]>Edit</a> </td>
-                                 <td><a class='btn btn-danger rounded-pill'   href=editItem.php?did=$item[item_id]>Delete</a> </td>
+                                <td><a class='btn btn-outline-primary rounded-pill'   href=editItem.php?eid=$item[item_id]>Edit</a> </td>
+                                 <td><a class='btn btn-outline-danger rounded-pill'   href=editItem.php?did=$item[item_id]>Delete</a> </td>
                                 </tr>";
                             }
                         }
@@ -217,3 +235,4 @@ if(isset($_GET['priceRadio']))
 </body>
 
 </html>
+<?php } else{ header("Location:login.php");} ?>
