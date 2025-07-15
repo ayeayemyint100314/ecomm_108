@@ -57,7 +57,8 @@ function itemInfo($id)
                     $total = 0;                    
                     echo "<table class='table table-striped'>";
                     foreach ($cart as $id => $qty) {
-                        $item = itemInfo($id); $total += $qty * $item['price'];
+                        $item = itemInfo($id);
+                         $total += $qty * $item['price'];
                         $amount = $qty * $item['price'];
                         echo   "<tr>
                                 <td class=w-50>$item[iname]  </td>
