@@ -10,7 +10,7 @@ if (isset($_POST['customerLogin'])) {
     $password = $_POST['password'];
 
     try {
-        $sql = "select email, password from users where email=?";
+        $sql = "select * from users where email=?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$email]);
         //echo "in clogin sql code ";
@@ -22,6 +22,7 @@ if (isset($_POST['customerLogin'])) {
             if (password_verify($password, $userInfo['password'])) {
                 $_SESSION['customerEmail'] = $email;
                 $_SESSION['clogin'] = true;
+                $_SESSION['profile'] = $userInfo['profile_path'];
                // echo "session variable set";
                 header("Location:customerViewItem.php");
             } else {

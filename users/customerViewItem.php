@@ -112,22 +112,20 @@ $_SESSION['items'] = $items;
         <script>
             function decrease(btn) {
                 const form = btn.closest("form");
-                const qtyInput = form.querySelector("[name='qty']");
+                const qtyInput = form.querySelector("[name='qty']");// form control qty text box
                 let qty = parseInt(qtyInput.value) || 0;
-                if (qty>0)
-                qty--;
-                qtyInput.value=qty;
+                if (qty > 0) // if qty >0 , it will decrease
+                    qty--;
+                qtyInput.value = qty; // setting value to qty text box 
 
             }
-
             function increase(btn) {
                 const form = btn.closest("form");
                 const qtyInput = form.querySelector("[name='qty']");
-                let qty = parseInt(qtyInput.value) || 0;
-                if (qty<10)
-                qty++;
-                qtyInput.value=qty;
-
+                let qty = parseInt(qtyInput.value) || 0; // before increase
+                if (qty < 10) // allow qtn to buy to 10
+                    qty++;
+                qtyInput.value = qty;
             }
         </script>
 
@@ -138,7 +136,7 @@ $_SESSION['items'] = $items;
 
 -->
 
-    <body class="bg-light">
+    <body class="bg-success p-2 text-dark bg-opacity-50">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
@@ -204,7 +202,7 @@ $_SESSION['items'] = $items;
                     <?php } ?>
 
 
-                    ?>
+
 
 
 
@@ -231,8 +229,11 @@ $_SESSION['items'] = $items;
                                             <form action="addCart.php" method="get">
                                                 <button type="button" onclick="decrease(this)">-</button>
                                                 <input type="hidden" name="itemID" value="<?php echo $item['item_id']; ?>">
-                                                <input type="text"  min="0" max="10" size="1" id="qty" name="qty" value="<?php if(isset($_SESSION['cart'][$item['item_id']]))
-                                                                                                                             echo $_SESSION['cart'][$item['item_id']]; else echo "1"; ?>">
+                                                <input type="text" min="0" max="10" size="1" id="qty" name="qty"
+                                                 value="<?php if (isset($_SESSION['cart'][$item['item_id']])) 
+                                                                                    echo $_SESSION['cart'][$item['item_id']];
+                                                                                                                      
+                                                                            else echo "1"; ?>">
                                                 <button type="button" onclick="increase(this)">+</button>
 
                                                 <button type="submit" class="btn btn-outline-primary rounded-pill" name="addCart">Add to cart</button>

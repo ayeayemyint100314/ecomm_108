@@ -54,23 +54,21 @@ function itemInfo($id)
                 if (isset($_SESSION['cart'])) {
                     echo "<div class=display-6>Items in your cart !!!!!</div>";
                     $cart = $_SESSION['cart'];
-                    $total = 0;
-                    
+                    $total = 0;                    
                     echo "<table class='table table-striped'>";
                     foreach ($cart as $id => $qty) {
-                        $item = itemInfo($id);
-                        $total += $qty * $item['price'];
+                        $item = itemInfo($id); $total += $qty * $item['price'];
                         $amount = $qty * $item['price'];
                         echo   "<tr>
-                        <td class='w-50'>$item[iname]  </td>
-                        <td>$item[price]  </td>
-                        <td>$item[category]  </td>
-                        <td><img style=width:60px; height:60px   src=../$item[img_path]>  </td>
-                        <td>$qty  </td>
-                        <td class='text-end'> $amount</td>
-                        <td><a href=addCart.php?did=$item[item_id]><img style=width:30px; height:30px; src=profile/remove.png> </a> <td>
-        
-                </tr>";
+                                <td class=w-50>$item[iname]  </td>
+                                <td>$item[price]  </td>
+                                <td>$item[category]  </td>
+                                <td><img style=width:60px; height:60px   src=../$item[img_path]>  </td>
+                                <td>$qty  </td>
+                                <td class='text-end'> $amount</td>
+                                <td><a href=addCart.php?did=$item[item_id]><img style=width:30px; height:30px; src=profile/remove.png> 
+                                </a> <td>        
+                                </tr>";
                     } // end foreach
                     echo "</table>";
                 }
