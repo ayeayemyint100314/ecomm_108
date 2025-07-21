@@ -8,6 +8,13 @@ if (!isset($_SESSION)) {
 if (isset($_POST['customerLogin'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
+$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+// Validate e-mail
+if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
+  echo("$email is a valid email address");
+} 
+
 
     try {
         $sql = "select * from users where email=?";
