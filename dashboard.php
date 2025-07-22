@@ -27,7 +27,7 @@ function noUser()
         <div class="row">
             <div class="col-md-3 card shadow-sm border-0 rounded-4 h-100 py-3 px-3">
                 <?php $user = noUser();
-                echo "<div class='card-title'>$user </div>";  ?>
+                echo "<div class='card-title'> No of users $user </div>";  ?>
             </div>
             <div class="col-md-3"></div>
             <div class="col-md-3"></div>
