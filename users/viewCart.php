@@ -14,6 +14,7 @@ function itemInfo($id)
                     from item i, category c
                     where i.category = c.cid AND 
                     i.item_id = ?";
+      
 
         $stmt = $conn->prepare($sql);
         $stmt->execute([$id]);
@@ -33,7 +34,19 @@ if(isset($_POST['payNow']) && $_SERVER['REQUEST_METHOD']=="POST")
         $sql = "insert into orders (orderId, userId) values (?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->execute([null, $userId]);
-        echo "order inserted!!!!!";
+        $orderId = $conn->lastInsertId(); // getting order id from sql
+        
+        $cart = $_SESSION['cart'];
+        $sql = "insert into orderdetail (orderId, item_id, quantity) values (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+         foreach($cart as $id => $qty)
+        {
+            $stmt->execute([$orderId, $id, $qty]);
+        }
+        // header("Location: thankyou.php");
+       
+
+
 
     }catch(PDOException $e)
     {
