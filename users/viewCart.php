@@ -24,6 +24,26 @@ function itemInfo($id)
     }
 } // function end
 
+if(isset($_POST['payNow']) && $_SERVER['REQUEST_METHOD']=="POST")
+{  // getting user id
+    $userId = $_SESSION['userId'];
+    echo "$userId in checkout process";
+    // insert into orders
+    try{
+        $sql = "insert into orders (orderId, userId) values (?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([null, $userId]);
+        echo "order inserted!!!!!";
+
+    }catch(PDOException $e)
+    {
+        echo $e->getMessage();
+    }
+
+
+}
+
+
 
 ?>
 
@@ -49,7 +69,7 @@ function itemInfo($id)
            <?php  require_once "cnavbar.php"; ?>
         </div>
         <div class="row my-5">
-            <div class="col-12 col-md-6 col-lg-3 mx-auto">
+            <div class="col-md-6 col-lg-3 mx-auto">
                 <?php
                 if (isset($_SESSION['cart'])) {
                     echo "<div class=display-6>Items in your cart !!!!!</div>";
@@ -75,9 +95,32 @@ function itemInfo($id)
                 }
                 ?>
                 <div class="text-end"><?php echo "Total Amount ".$total; ?></div>
+                <a href="viewCart.php?checkout=clicked" class="text-decoration-none">Checkout</a>
+            </div>
+            <?php if(isset($_GET['checkout']) && $_GET['checkout']=="clicked") {  ?>
+            <div class="col-md-3">
+                    <h3>Card information</h3>
+                <form action="viewCart.php" method="post" class="form border-1">
+                <select name="paymentOption" class="form-select">
+                        <option value="">choose payment option</option>
+                        <option value="ayaMPU">AYA MPU card</option>
+                        <option value="ayaCredit">AYA Credit card</option>
+                        <option value="ayaVISA">AYA VISA card</option>
+
+                </select>
+                <div class="my-3">
+                    <label for="cardNumber" class="form-label">Fill Card Number</label>
+                    <input type="text" class="form-control" name="cardNumber" >
+                </div>
+
+                <button type="submit" name="payNow" class="btn btn-outline-primary">Pay Now</button>
+                </form>
+
+
+
 
             </div>
-
+                <?php } ?>
 
         </div>
 

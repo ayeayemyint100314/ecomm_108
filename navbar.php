@@ -19,6 +19,7 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"  name="wSearch"/>
             <button class="btn btn-outline-primary" type="submit" name="bSearch">Search</button>
           </form>
+          <a href="dashboard.php" class="btn btn-outline-secondary mx-5">Dashboard</a>
           <a class="nav-link" href="logout.php">Logout</a>
         <?php  } ?>
       </div>

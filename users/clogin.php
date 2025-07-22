@@ -30,6 +30,7 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
                 $_SESSION['customerEmail'] = $email;
                 $_SESSION['clogin'] = true;
                 $_SESSION['profile'] = $userInfo['profile_path'];
+                $_SESSION['userId'] = $userInfo['userid'];
                // echo "session variable set";
                 header("Location:customerViewItem.php");
             } else {
